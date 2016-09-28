@@ -27,5 +27,6 @@ namespace ControldeCambios.Models
     
         public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
+        public virtual DbSet<Usuarios> Usuarios { get; set; }
     }
 }

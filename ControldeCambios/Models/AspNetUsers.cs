@@ -18,6 +18,7 @@ namespace ControldeCambios.Models
         public AspNetUsers()
         {
             this.AspNetRoles = new HashSet<AspNetRoles>();
+            this.Usuarios = new HashSet<Usuarios>();
         }
     
         public string Id { get; set; }
@@ -35,5 +36,7 @@ namespace ControldeCambios.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetRoles> AspNetRoles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Usuarios> Usuarios { get; set; }
     }
 }

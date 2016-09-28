@@ -8,6 +8,8 @@
         <EntityTypeShape EntityType="CreateUserModel.AspNetRoles" Width="1.5" PointX="0.75" PointY="2" />
         <EntityTypeShape EntityType="CreateUserModel.AspNetUsers" Width="1.5" PointX="3" PointY="1" />
         <AssociationConnector Association="CreateUserModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="CreateUserModel.Usuarios" Width="1.5" PointX="5.5" PointY="2" />
+        <AssociationConnector Association="CreateUserModel.fk_AspUserId" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

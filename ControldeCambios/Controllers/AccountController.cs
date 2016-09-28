@@ -139,7 +139,7 @@ namespace ControldeCambios.Controllers
         public ActionResult Register()
         {
             CreateUserEntities db = new CreateUserEntities();
-            ViewBag.Name = new SelectList(db.AspNetRoles.Where(u => !u.Name.Contains("Admin"))
+            ViewBag.Name = new SelectList(db.AspNetRoles//.Where(u => !u.Name.Contains("Admin"))
                                 .ToList(), "Name", "Name");
             return View();
         }
@@ -150,6 +150,7 @@ namespace ControldeCambios.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            CreateUserEntities db = new CreateUserEntities();
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
@@ -158,16 +159,32 @@ namespace ControldeCambios.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
+                    
+
+                    var userEntry = new Usuarios();
+                    userEntry.cedula = model.Cedula;
+                    userEntry.nombre = model.Nombre;
+                    userEntry.id = db.AspNetUsers.Where(u => u.Email == model.Email).FirstOrDefault().Id;
+
+                    db.Usuarios.Add(userEntry);
+                    db.SaveChanges();
+
+                    
+                    
                     // Para obtener más información sobre cómo habilitar la confirmación de cuenta y el restablecimiento de contraseña, visite http://go.microsoft.com/fwlink/?LinkID=320771
                     // Enviar correo electrónico con este vínculo
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirmar cuenta", "Para confirmar la cuenta, haga clic <a href=\"" + callbackUrl + "\">aquí</a>");
 
-                    await this.UserManager.AddToRoleAsync(user.Id, model.UserRoles);
+                    await this.UserManager.AddToRoleAsync(user.Id, model.UserRoles.First().Text);
 
                     return RedirectToAction("Index", "Home");
                 }
+
+                ViewBag.Name = new SelectList(db.AspNetRoles//.Where(u => !u.Name.Contains("Admin"))
+                          .ToList(), "Name", "Name");
+
                 AddErrors(result);
             }
 
